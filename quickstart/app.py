@@ -43,18 +43,6 @@ async def memory_context() -> str:
     return "\n".join(f"- {row['topic']}: {row['note']}" for row in rows)
 
 
-def context_block(context: str) -> str:
-    return f"""<details>
-<summary>Context used</summary>
-
-```md
-{context}
-```
-</details>
-
-"""
-
-
 # Pages turn the same app into an operator-facing dashboard.
 @app.page("Knowledge", icon="files")
 def knowledge_page():
@@ -84,7 +72,6 @@ async def handle(session: cpsl.Session, msg: cpsl.Message):
 
     # BAML keeps LLM output typed and predictable.
     context = f"{company_docs()}\n\n## Saved memories\n{await memory_context()}"
-    await session.reply(context_block(context))
     await session.stream_reply_from(
         b.stream.AnswerQuestion(question=intent.question or text, context=context, system_prompt=PROMPT)
     )
