@@ -5,7 +5,7 @@ description = "A Capsule scheduled background agent."
 requires-python = ">=3.13"
 dependencies = [
     "baml-py==0.220.0",
-    "cpsl>=0.3.46",
+    "cpsl>=0.3.48",
     "pydantic>=2.13.2",
 ]
 

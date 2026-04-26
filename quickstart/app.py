@@ -43,6 +43,18 @@ async def memory_context() -> str:
     return "\n".join(f"- {row['topic']}: {row['note']}" for row in rows)
 
 
+def context_block(context: str) -> str:
+    return f"""<details>
+<summary>Context used</summary>
+
+```md
+{context}
+```
+</details>
+
+"""
+
+
 # Pages turn the same app into an operator-facing dashboard.
 @app.page("Knowledge", icon="files")
 def knowledge_page():
@@ -61,18 +73,18 @@ def knowledge_page():
 async def handle(session: cpsl.Session, msg: cpsl.Message):
     text = (msg.text or "").strip()
 
-    if text.lower().startswith("remember "):
-        note = text.removeprefix("remember ").strip()
-        await memories.insert_one({"topic": "company note", "note": note, "source": "chat"})
+    from baml_client import b, types
+
+    intent = await b.ClassifyMessage(message=text)
+
+    if intent.kind == types.MessageIntentKind.SAVE_MEMORY:
+        await memories.insert_one({"topic": "company note", "note": intent.memory_note or text, "source": "chat"})
         await session.reply("Got it. I saved that as company memory.")
         return
 
     # BAML keeps LLM output typed and predictable.
-    from baml_client import b
-
-    answer = await b.AnswerQuestion(
-        question=text,
-        context=f"{company_docs()}\n\n## Saved memories\n{await memory_context()}",
-        system_prompt=PROMPT,
+    context = f"{company_docs()}\n\n## Saved memories\n{await memory_context()}"
+    await session.reply(context_block(context))
+    await session.stream_reply_from(
+        b.stream.AnswerQuestion(question=intent.question or text, context=context, system_prompt=PROMPT)
     )
-    await session.reply(answer.answer)

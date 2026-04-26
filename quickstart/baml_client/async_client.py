@@ -84,7 +84,7 @@ class BamlAsyncClient:
 
     async def AnswerQuestion(self, question: str,context: str,system_prompt: str,
         baml_options: BamlCallOptions = {},
-    ) -> types.Answer:
+    ) -> str:
         # Check if on_tick is provided
         if 'on_tick' in baml_options:
             # Use streaming internally when on_tick is provided
@@ -96,7 +96,22 @@ class BamlAsyncClient:
             __result__ = await self.__options.merge_options(baml_options).call_function_async(function_name="AnswerQuestion", args={
                 "question": question,"context": context,"system_prompt": system_prompt,
             })
-            return typing.cast(types.Answer, __result__.cast_to(types, types, stream_types, False, __runtime__))
+            return typing.cast(str, __result__.cast_to(types, types, stream_types, False, __runtime__))
+    async def ClassifyMessage(self, message: str,
+        baml_options: BamlCallOptions = {},
+    ) -> types.MessageIntent:
+        # Check if on_tick is provided
+        if 'on_tick' in baml_options:
+            # Use streaming internally when on_tick is provided
+            __stream__ = self.stream.ClassifyMessage(message=message,
+                baml_options=baml_options)
+            return await __stream__.get_final_response()
+        else:
+            # Original non-streaming code
+            __result__ = await self.__options.merge_options(baml_options).call_function_async(function_name="ClassifyMessage", args={
+                "message": message,
+            })
+            return typing.cast(types.MessageIntent, __result__.cast_to(types, types, stream_types, False, __runtime__))
     
 
 
@@ -108,14 +123,26 @@ class BamlStreamClient:
 
     def AnswerQuestion(self, question: str,context: str,system_prompt: str,
         baml_options: BamlCallOptions = {},
-    ) -> baml_py.BamlStream[stream_types.Answer, types.Answer]:
+    ) -> baml_py.BamlStream[str, str]:
         __ctx__, __result__ = self.__options.merge_options(baml_options).create_async_stream(function_name="AnswerQuestion", args={
             "question": question,"context": context,"system_prompt": system_prompt,
         })
-        return baml_py.BamlStream[stream_types.Answer, types.Answer](
+        return baml_py.BamlStream[str, str](
           __result__,
-          lambda x: typing.cast(stream_types.Answer, x.cast_to(types, types, stream_types, True, __runtime__)),
-          lambda x: typing.cast(types.Answer, x.cast_to(types, types, stream_types, False, __runtime__)),
+          lambda x: typing.cast(str, x.cast_to(types, types, stream_types, True, __runtime__)),
+          lambda x: typing.cast(str, x.cast_to(types, types, stream_types, False, __runtime__)),
+          __ctx__,
+        )
+    def ClassifyMessage(self, message: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.BamlStream[stream_types.MessageIntent, types.MessageIntent]:
+        __ctx__, __result__ = self.__options.merge_options(baml_options).create_async_stream(function_name="ClassifyMessage", args={
+            "message": message,
+        })
+        return baml_py.BamlStream[stream_types.MessageIntent, types.MessageIntent](
+          __result__,
+          lambda x: typing.cast(stream_types.MessageIntent, x.cast_to(types, types, stream_types, True, __runtime__)),
+          lambda x: typing.cast(types.MessageIntent, x.cast_to(types, types, stream_types, False, __runtime__)),
           __ctx__,
         )
     
@@ -133,6 +160,13 @@ class BamlHttpRequestClient:
             "question": question,"context": context,"system_prompt": system_prompt,
         }, mode="request")
         return __result__
+    async def ClassifyMessage(self, message: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        __result__ = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ClassifyMessage", args={
+            "message": message,
+        }, mode="request")
+        return __result__
     
 
 class BamlHttpStreamRequestClient:
@@ -146,6 +180,13 @@ class BamlHttpStreamRequestClient:
     ) -> baml_py.baml_py.HTTPRequest:
         __result__ = await self.__options.merge_options(baml_options).create_http_request_async(function_name="AnswerQuestion", args={
             "question": question,"context": context,"system_prompt": system_prompt,
+        }, mode="stream")
+        return __result__
+    async def ClassifyMessage(self, message: str,
+        baml_options: BamlCallOptions = {},
+    ) -> baml_py.baml_py.HTTPRequest:
+        __result__ = await self.__options.merge_options(baml_options).create_http_request_async(function_name="ClassifyMessage", args={
+            "message": message,
         }, mode="stream")
         return __result__
     

@@ -20,14 +20,18 @@ from .globals import DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIM
 class TypeBuilder(type_builder.TypeBuilder):
     def __init__(self):
         super().__init__(classes=set(
-          ["Answer",]
+          ["MessageIntent",]
         ), enums=set(
-          []
+          ["MessageIntentKind",]
         ), runtime=DO_NOT_USE_DIRECTLY_UNLESS_YOU_KNOW_WHAT_YOURE_DOING_RUNTIME)
 
     # #########################################################################
-    # Generated enums 0
+    # Generated enums 1
     # #########################################################################
+
+    @property
+    def MessageIntentKind(self) -> "MessageIntentKindViewer":
+        return MessageIntentKindViewer(self)
 
 
     # #########################################################################
@@ -35,36 +39,78 @@ class TypeBuilder(type_builder.TypeBuilder):
     # #########################################################################
 
     @property
-    def Answer(self) -> "AnswerViewer":
-        return AnswerViewer(self)
+    def MessageIntent(self) -> "MessageIntentViewer":
+        return MessageIntentViewer(self)
 
 
 
 # #########################################################################
-# Generated enums 0
+# Generated enums 1
 # #########################################################################
+
+class MessageIntentKindAst:
+    def __init__(self, tb: type_builder.TypeBuilder):
+        _tb = tb._tb # type: ignore (we know how to use this private attribute)
+        self._bldr = _tb.enum("MessageIntentKind")
+        self._values: typing.Set[str] = set([  "SAVE_MEMORY",  "ANSWER_QUESTION",  ])
+        self._vals = MessageIntentKindValues(self._bldr, self._values)
+
+    def type(self) -> baml_py.FieldType:
+        return self._bldr.field()
+
+    @property
+    def values(self) -> "MessageIntentKindValues":
+        return self._vals
+
+
+class MessageIntentKindViewer(MessageIntentKindAst):
+    def __init__(self, tb: type_builder.TypeBuilder):
+        super().__init__(tb)
+
+    
+    def list_values(self) -> typing.List[typing.Tuple[str, type_builder.EnumValueViewer]]:
+        return [(name, type_builder.EnumValueViewer(self._bldr.value(name))) for name in self._values]
+    
+
+class MessageIntentKindValues:
+    def __init__(self, enum_bldr: baml_py.EnumBuilder, values: typing.Set[str]):
+        self.__bldr = enum_bldr
+        self.__values = values # type: ignore (we know how to use this private attribute) # noqa: F821
+
+    
+    
+    @property
+    def SAVE_MEMORY(self) -> type_builder.EnumValueViewer:
+        return type_builder.EnumValueViewer(self.__bldr.value("SAVE_MEMORY"))
+    
+    @property
+    def ANSWER_QUESTION(self) -> type_builder.EnumValueViewer:
+        return type_builder.EnumValueViewer(self.__bldr.value("ANSWER_QUESTION"))
+    
+    
+
 
 
 # #########################################################################
 # Generated classes 1
 # #########################################################################
 
-class AnswerAst:
+class MessageIntentAst:
     def __init__(self, tb: type_builder.TypeBuilder):
         _tb = tb._tb # type: ignore (we know how to use this private attribute)
-        self._bldr = _tb.class_("Answer")
-        self._properties: typing.Set[str] = set([  "answer",  ])
-        self._props = AnswerProperties(self._bldr, self._properties)
+        self._bldr = _tb.class_("MessageIntent")
+        self._properties: typing.Set[str] = set([  "kind",  "memory_note",  "question",  ])
+        self._props = MessageIntentProperties(self._bldr, self._properties)
 
     def type(self) -> baml_py.FieldType:
         return self._bldr.field()
 
     @property
-    def props(self) -> "AnswerProperties":
+    def props(self) -> "MessageIntentProperties":
         return self._props
 
 
-class AnswerViewer(AnswerAst):
+class MessageIntentViewer(MessageIntentAst):
     def __init__(self, tb: type_builder.TypeBuilder):
         super().__init__(tb)
 
@@ -74,7 +120,7 @@ class AnswerViewer(AnswerAst):
     
 
 
-class AnswerProperties:
+class MessageIntentProperties:
     def __init__(self, bldr: baml_py.ClassBuilder, properties: typing.Set[str]):
         self.__bldr = bldr
         self.__properties = properties # type: ignore (we know how to use this private attribute) # noqa: F821
@@ -82,8 +128,16 @@ class AnswerProperties:
     
     
     @property
-    def answer(self) -> type_builder.ClassPropertyViewer:
-        return type_builder.ClassPropertyViewer(self.__bldr.property("answer"))
+    def kind(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("kind"))
+    
+    @property
+    def memory_note(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("memory_note"))
+    
+    @property
+    def question(self) -> type_builder.ClassPropertyViewer:
+        return type_builder.ClassPropertyViewer(self.__bldr.property("question"))
     
     
 

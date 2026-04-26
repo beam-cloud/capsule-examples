@@ -13,5 +13,7 @@ function SummarizeSignal(topic: string, now: string) -> SignalSummary {
     {{ _.role("user") }}
     Time: {{ now }}
     Topic: {{ topic }}
+
+    {{ ctx.output_format }}
   "#
 }

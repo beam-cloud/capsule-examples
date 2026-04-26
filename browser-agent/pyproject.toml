@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "A Capsule browser workflow with a visible browser pane."
 requires-python = ">=3.13"
 dependencies = [
-    "cpsl>=0.3.46",
+    "cpsl>=0.3.48",
 ]
 
 [tool.setuptools]

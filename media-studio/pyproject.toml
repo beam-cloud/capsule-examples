@@ -5,7 +5,7 @@ description = "A Capsule media generation studio powered by fal.ai and BAML."
 requires-python = ">=3.13"
 dependencies = [
     "baml-py==0.220.0",
-    "cpsl>=0.3.46",
+    "cpsl>=0.3.48",
     "fal-client>=0.7.0",
     "pydantic>=2.13.2",
 ]

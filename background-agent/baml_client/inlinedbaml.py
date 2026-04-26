@@ -14,7 +14,7 @@ _file_map = {
 
     "clients.baml": "client<llm> Anthropic {\n  provider anthropic\n  options {\n    model claude-sonnet-4-20250514\n    api_key env.ANTHROPIC_API_KEY\n  }\n}\n",
     "generator.baml": "generator target {\n  output_type \"python/pydantic\"\n  output_dir \"..\"\n  version \"0.220.0\"\n}\n",
-    "monitor.baml": "class SignalSummary {\n  summary string\n  priority string\n}\n\nfunction SummarizeSignal(topic: string, now: string) -> SignalSummary {\n  client Anthropic\n  prompt #\"\n    {{ _.role(\"system\") }}\n    You are a background operations agent. Produce a concise run result.\n    priority must be one of low, medium, high.\n\n    {{ _.role(\"user\") }}\n    Time: {{ now }}\n    Topic: {{ topic }}\n  \"#\n}\n",
+    "monitor.baml": "class SignalSummary {\n  summary string\n  priority string\n}\n\nfunction SummarizeSignal(topic: string, now: string) -> SignalSummary {\n  client Anthropic\n  prompt #\"\n    {{ _.role(\"system\") }}\n    You are a background operations agent. Produce a concise run result.\n    priority must be one of low, medium, high.\n\n    {{ _.role(\"user\") }}\n    Time: {{ now }}\n    Topic: {{ topic }}\n\n    {{ ctx.output_format }}\n  \"#\n}\n",
 }
 
 def get_baml_files():

@@ -47,6 +47,7 @@ capsule deploy app.py:app
 - Owner-scoped memory stored in a Capsule collection.
 - A named Telegram channel for questions from outside the web UI.
 - BAML-backed structured answers with escalation guidance.
+- Streaming replies that include the context used for the answer.
 - A simple dashboard page showing included documents and saved memories.
 
 Try:

@@ -16,8 +16,10 @@ from . import stream_types
 
 type_map = {
 
-    "types.Answer": types.Answer,
-    "stream_types.Answer": stream_types.Answer,
+    "types.MessageIntent": types.MessageIntent,
+    "stream_types.MessageIntent": stream_types.MessageIntent,
 
+
+    "types.MessageIntentKind": types.MessageIntentKind,
 
 }

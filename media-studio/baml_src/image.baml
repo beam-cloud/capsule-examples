@@ -14,5 +14,7 @@ function ParseImageRequest(message: string, style_guide: string) -> ImageSpec {
 
     {{ _.role("user") }}
     {{ message }}
+
+    {{ ctx.output_format }}
   "#
 }

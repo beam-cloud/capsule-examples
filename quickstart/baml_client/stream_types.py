@@ -26,8 +26,10 @@ class StreamState(BaseModel, typing.Generic[StreamStateValueT]):
 # Generated classes (1)
 # #########################################################################
 
-class Answer(BaseModel):
-    answer: typing.Optional[str] = None
+class MessageIntent(BaseModel):
+    kind: typing.Optional[types.MessageIntentKind] = None
+    memory_note: typing.Optional[str] = None
+    question: typing.Optional[str] = None
 
 # #########################################################################
 # Generated type aliases (0)

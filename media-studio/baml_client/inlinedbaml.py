@@ -14,7 +14,7 @@ _file_map = {
 
     "clients.baml": "client<llm> Anthropic {\n  provider anthropic\n  options {\n    model claude-sonnet-4-20250514\n    api_key env.ANTHROPIC_API_KEY\n  }\n}\n",
     "generator.baml": "generator target {\n  output_type \"python/pydantic\"\n  output_dir \"..\"\n  version \"0.220.0\"\n}\n",
-    "image.baml": "class ImageSpec {\n  prompt string\n  style string\n  aspect_ratio string\n}\n\nfunction ParseImageRequest(message: string, style_guide: string) -> ImageSpec {\n  client Anthropic\n  prompt #\"\n    {{ _.role(\"system\") }}\n    Convert the request into an image-generation spec.\n    Style guide: {{ style_guide }}\n    aspect_ratio must be one of: square_hd, square, portrait_4_3, portrait_16_9, landscape_4_3, landscape_16_9.\n\n    {{ _.role(\"user\") }}\n    {{ message }}\n  \"#\n}\n",
+    "image.baml": "class ImageSpec {\n  prompt string\n  style string\n  aspect_ratio string\n}\n\nfunction ParseImageRequest(message: string, style_guide: string) -> ImageSpec {\n  client Anthropic\n  prompt #\"\n    {{ _.role(\"system\") }}\n    Convert the request into an image-generation spec.\n    Style guide: {{ style_guide }}\n    aspect_ratio must be one of: square_hd, square, portrait_4_3, portrait_16_9, landscape_4_3, landscape_16_9.\n\n    {{ _.role(\"user\") }}\n    {{ message }}\n\n    {{ ctx.output_format }}\n  \"#\n}\n",
 }
 
 def get_baml_files():

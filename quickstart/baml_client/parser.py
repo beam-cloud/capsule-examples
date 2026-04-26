@@ -25,9 +25,15 @@ class LlmResponseParser:
 
     def AnswerQuestion(
         self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> types.Answer:
+    ) -> str:
         __result__ = self.__options.merge_options(baml_options).parse_response(function_name="AnswerQuestion", llm_response=llm_response, mode="request")
-        return typing.cast(types.Answer, __result__)
+        return typing.cast(str, __result__)
+
+    def ClassifyMessage(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> types.MessageIntent:
+        __result__ = self.__options.merge_options(baml_options).parse_response(function_name="ClassifyMessage", llm_response=llm_response, mode="request")
+        return typing.cast(types.MessageIntent, __result__)
 
     
 
@@ -39,8 +45,14 @@ class LlmStreamParser:
 
     def AnswerQuestion(
         self, llm_response: str, baml_options: BamlCallOptions = {},
-    ) -> stream_types.Answer:
+    ) -> str:
         __result__ = self.__options.merge_options(baml_options).parse_response(function_name="AnswerQuestion", llm_response=llm_response, mode="stream")
-        return typing.cast(stream_types.Answer, __result__)
+        return typing.cast(str, __result__)
+
+    def ClassifyMessage(
+        self, llm_response: str, baml_options: BamlCallOptions = {},
+    ) -> stream_types.MessageIntent:
+        __result__ = self.__options.merge_options(baml_options).parse_response(function_name="ClassifyMessage", llm_response=llm_response, mode="stream")
+        return typing.cast(stream_types.MessageIntent, __result__)
 
     

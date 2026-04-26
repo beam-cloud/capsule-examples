@@ -37,15 +37,21 @@ def get_checks(checks: typing.Dict[CheckName, Check]) -> typing.List[Check]:
 def all_succeeded(checks: typing.Dict[CheckName, Check]) -> bool:
     return all(check.status == "succeeded" for check in get_checks(checks))
 # #########################################################################
-# Generated enums (0)
+# Generated enums (1)
 # #########################################################################
+
+class MessageIntentKind(str, Enum):
+    SAVE_MEMORY = "SAVE_MEMORY"
+    ANSWER_QUESTION = "ANSWER_QUESTION"
 
 # #########################################################################
 # Generated classes (1)
 # #########################################################################
 
-class Answer(BaseModel):
-    answer: str
+class MessageIntent(BaseModel):
+    kind: MessageIntentKind
+    memory_note: typing.Optional[str] = None
+    question: typing.Optional[str] = None
 
 # #########################################################################
 # Generated type aliases (0)
