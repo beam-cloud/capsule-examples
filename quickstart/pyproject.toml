@@ -5,7 +5,7 @@ description = "A Capsule chat app grounded in local files."
 requires-python = ">=3.13"
 dependencies = [
     "baml-py==0.220.0",
-    "cpsl>=0.3.44",
+    "cpsl>=0.3.46",
     "pydantic>=2.13.2",
 ]
 

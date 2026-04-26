@@ -29,6 +29,12 @@ uv sync
 capsule serve app.py:app --channel workplace-telegram
 ```
 
+If you edit `baml_src/`, regenerate the checked-in client with:
+
+```bash
+make baml
+```
+
 ## Deploy
 
 ```bash

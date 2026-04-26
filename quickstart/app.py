@@ -14,10 +14,7 @@ Never invent access, HR, expense, customer, or security rules.
 # App config: package dependencies and secrets travel with every deploy.
 app = cpsl.App(
     name="{{ project_slug }}",
-    image=cpsl.Image(
-        python_packages=["baml-py==0.220.0", "pydantic>=2.13.2"],
-        commands=["baml-cli generate --from baml_src"],
-    ),
+    image=cpsl.Image(python_packages=["baml-py==0.220.0", "pydantic>=2.13.2"]),
     channels=[cpsl.Channel("workplace-telegram")],
     secrets=["ANTHROPIC_API_KEY"],
 )
