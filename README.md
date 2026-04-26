@@ -2,6 +2,8 @@
 
 Starter apps for Capsule.
 
+Docs: [docs.capsule.new](https://docs.capsule.new)
+
 Use them through the CLI:
 
 ```bash
