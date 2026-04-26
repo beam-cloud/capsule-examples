@@ -1,6 +1,6 @@
 # Capsule Examples
 
-Production-shaped starter apps for Capsule.
+Starter apps for Capsule.
 
 Use them through the CLI:
 
