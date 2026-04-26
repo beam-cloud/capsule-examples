@@ -1,0 +1,8 @@
+name: background-agent
+display_name: Background Agent
+description: Scheduled and on-demand agent loop with a results dashboard.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+  - ANTHROPIC_API_KEY
+optional_secrets:

@@ -1,0 +1,8 @@
+name: browser-agent
+display_name: Browser Agent
+description: Run a browser workflow with a visible browser pane.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+optional_secrets:
+  - ANTHROPIC_API_KEY

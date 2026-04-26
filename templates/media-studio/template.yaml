@@ -1,0 +1,9 @@
+name: media-studio
+display_name: Media Studio
+description: Generate images in chat with BAML-parsed intent and fal.ai.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+  - FAL_KEY
+  - ANTHROPIC_API_KEY
+optional_secrets:

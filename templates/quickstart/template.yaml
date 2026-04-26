@@ -1,0 +1,10 @@
+name: quickstart
+display_name: Quickstart
+description: Persistent workplace knowledge agent with docs, BAML answers, and saved memories.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+  - ANTHROPIC_API_KEY
+required_channels:
+  - capsule channel create workplace-telegram --type telegram -c bot_token=123:ABC
+optional_secrets:

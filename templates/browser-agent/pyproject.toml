@@ -1,0 +1,15 @@
+[project]
+name = "{{ project_slug }}"
+version = "0.1.0"
+description = "A Capsule browser workflow with a visible browser pane."
+requires-python = ">=3.13"
+dependencies = [
+    "cpsl>=0.3.44",
+]
+
+[tool.setuptools]
+py-modules = ["app", "browser", "workflow"]
+
+[build-system]
+requires = ["setuptools>=42", "wheel"]
+build-backend = "setuptools.build_meta"

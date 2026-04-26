@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+*.pyc
+.baml/
+baml_client/
+dist/
+*.egg-info/
