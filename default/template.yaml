@@ -1,0 +1,8 @@
+name: default
+display_name: Default
+description: Clean starter app showing the core Capsule surfaces with BAML chat.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+  - ANTHROPIC_API_KEY
+optional_secrets:
