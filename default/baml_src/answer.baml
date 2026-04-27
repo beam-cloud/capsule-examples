@@ -47,7 +47,7 @@ function AnswerQuestion(question: string, context: string, style: string, system
     {{ context }}
 
     If the user asks how this starter is wired, explain these parts:
-    - cpsl.App declares runtime packages, secrets, settings, and warm behavior.
+    - cpsl.App declares runtime packages, secrets, and app configuration.
     - @app.message() handles chat from the web UI and any channels added later.
     - app.collection stores durable records that can also render in pages.
     - @app.page and @app.data build the Overview page.

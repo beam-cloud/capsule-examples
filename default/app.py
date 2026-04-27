@@ -12,7 +12,6 @@ app = cpsl.App(
     name="{{ project_slug }}",
     image=cpsl.Image(python_packages=["baml-py==0.220.0", "pydantic>=2.13.2"]),
     secrets=["ANTHROPIC_API_KEY"],
-    keep_warm_seconds=30,
 )
 
 # Settings are editable configuration for your app.

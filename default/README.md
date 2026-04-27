@@ -4,7 +4,7 @@ A clean starter app for Capsule. It is intentionally small, but it shows the cor
 
 ## What It Shows
 
-- `cpsl.App(...)` declares the app name, runtime Python packages, secrets, and warm settings.
+- `cpsl.App(...)` declares the app name, runtime Python packages, and secrets.
 - `app.setting(...)` adds a configurable assistant style that shows up on the Overview page.
 - `app.collection(...)` stores durable notes that chat and pages can both use.
 - `@app.page(...)` and `@app.data(...)` build a simple operator-facing page.
