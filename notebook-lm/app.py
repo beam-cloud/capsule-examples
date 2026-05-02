@@ -140,6 +140,7 @@ def chat_page():
                                 allow_delete=True,
                                 allow_rename=True,
                                 allow_mkdir=True,
+                                fill=True,
                             ),
                         ],
                         fill=True,
@@ -195,10 +196,11 @@ def chat_page():
                         ]
                     ),
                 ],
-                columns=["minmax(240px, 0.9fr)", "minmax(360px, 1.25fr)", "minmax(240px, 0.9fr)"],
+                columns=[0.9, 1.25, 0.9],
+                min_widths=[240, 360, 240],
                 gap=16,
                 fill=True,
-                align="start",
+                align="stretch",
             )
         ]
     )
