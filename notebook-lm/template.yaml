@@ -1,0 +1,7 @@
+name: notebook-lm
+display_name: NotebookLM Style
+description: Custom chat surface with sources, a filesystem browser, and study actions.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+optional_secrets:
