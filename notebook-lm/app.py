@@ -141,7 +141,8 @@ def chat_page():
                                 allow_rename=True,
                                 allow_mkdir=True,
                             ),
-                        ]
+                        ],
+                        fill=True,
                     ),
                     ui.ChatPanel(
                         title="Chat",
@@ -193,7 +194,11 @@ def chat_page():
                             ),
                         ]
                     ),
-                ]
+                ],
+                columns=["minmax(240px, 0.9fr)", "minmax(360px, 1.25fr)", "minmax(240px, 0.9fr)"],
+                gap=16,
+                fill=True,
+                align="start",
             )
         ]
     )
