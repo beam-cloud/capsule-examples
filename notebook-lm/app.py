@@ -73,10 +73,13 @@ def read_sources(limit_chars: int = 24_000) -> str:
 
 
 def simple_answer(question: str, context: str) -> str:
-    question_words = {w.strip(".,:;!?()[]{}").lower() for w in question.split() if len(w) > 3}
+    question_words = {
+        w.strip(".,:;!?()[]{}").lower() for w in question.split() if len(w) > 3
+    }
     paragraphs = [p.strip() for p in context.split("\n\n") if p.strip()]
     matches = [
-        p for p in paragraphs
+        p
+        for p in paragraphs
         if question_words and any(word in p.lower() for word in question_words)
     ]
     selected = matches[:5] if matches else paragraphs[:4]
@@ -105,6 +108,15 @@ def source_stats():
     return {
         "sources": len(files),
         "bytes": sum(path.stat().st_size for path in files),
+    }
+
+
+@app.data("session_stats")
+def session_stats(session: cpsl.Session):
+    return {
+        "active": "Yes" if session.id else "No",
+        "messages": len(session.history),
+        "user": session.user.email or "Anonymous",
     }
 
 
@@ -140,8 +152,14 @@ def chat_page():
                         [
                             ui.Text("Studio", style="heading"),
                             ui.Text(
-                                "Generate study artifacts from the same active chat session.",
+                                "Generate study artifacts inside the same active chat session.",
                                 style="muted",
+                            ),
+                            ui.Row(
+                                [
+                                    ui.Metric("Session", data="session_stats", field="active"),
+                                    ui.Metric("Messages", data="session_stats", field="messages"),
+                                ]
                             ),
                             ui.ActionCard(
                                 "Audio overview",
@@ -186,7 +204,10 @@ def sources_page():
     return ui.Page(
         [
             ui.Text("Source inventory", style="heading"),
-            ui.Text("The same files are available in the chat page Sources panel.", style="muted"),
+            ui.Text(
+                "The same files are available in the chat page Sources panel.",
+                style="muted",
+            ),
             ui.Row(
                 [
                     ui.Metric("Files", data="source_stats", field="sources"),

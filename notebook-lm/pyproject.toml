@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "A NotebookLM-style Capsule app with sources and custom chat."
 requires-python = ">=3.13"
 dependencies = [
-    "cpsl>=0.3.80",
+    "cpsl>=0.3.84",
 ]
 
 [tool.setuptools]
