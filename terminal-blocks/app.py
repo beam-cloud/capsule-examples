@@ -11,7 +11,7 @@ app = cpsl.App(
 async def handle(session: cpsl.Session, msg: cpsl.Message):
     """Run a tiny diagnostics transcript in chat."""
     requested = (msg.text or "diagnostics").strip()
-    term = session.terminal("diagnostics", title="Diagnostics")
+    term = await session.show_terminal(title="Diagnostics")
 
     await term.shell("python --version && pwd")
     await term.exec(
