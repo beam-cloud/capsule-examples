@@ -21,6 +21,7 @@ capsule create image-studio --template media-studio
 capsule create browser-demo --template browser-agent
 capsule create research-loop --template background-agent
 capsule create research-notebook --template notebook-lm
+capsule create terminal-demo --template terminal-blocks
 ```
 
 ## Examples
@@ -31,5 +32,6 @@ capsule create research-notebook --template notebook-lm
 - `browser-agent` — workflow app that opens a visible browser pane from inside the runtime.
 - `background-agent` — scheduled and on-demand agent loop with a results page.
 - `notebook-lm` — custom chat surface with a source filesystem browser, chat panel, and study-action studio.
+- `terminal-blocks` — simple chat app that streams shell and exec command transcripts into chat.
 
 Each directory is a complete Capsule app with its own `README.md`, `template.yaml`, `pyproject.toml`, and root-level `app.py`.

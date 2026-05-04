@@ -120,7 +120,7 @@ def session_stats(session: cpsl.Session):
     }
 
 
-@app.chat_page()
+@app.chat_page(mode="single", scope="owner", sidebar_label="Notebook")
 def chat_page():
     return ui.Page(
         [
@@ -148,7 +148,6 @@ def chat_page():
                     ui.ChatPanel(
                         title="Chat",
                         placeholder="Ask about your sources...",
-                        height=720,
                     ),
                     ui.Column(
                         [

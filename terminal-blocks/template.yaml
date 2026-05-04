@@ -1,0 +1,7 @@
+name: terminal-blocks
+display_name: Terminal Blocks
+description: Simple chat app that streams shell and exec command transcripts into chat.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+optional_secrets:
