@@ -14,7 +14,7 @@ async def handle(session: cpsl.Session, msg: cpsl.Message):
     term = await session.show_terminal(title="Diagnostics")
 
     await term.shell("python --version && pwd")
-    await term.exec(
+    details = await term.exec(
         "python",
         "-c",
         (
@@ -25,4 +25,5 @@ async def handle(session: cpsl.Session, msg: cpsl.Message):
         ),
     )
 
-    await session.reply(f"Done running diagnostics for: {requested}")
+    first_line = (details.stdout.strip().splitlines() or ["diagnostics complete"])[0]
+    await session.reply(f"Done running diagnostics for: {requested}\n\n{first_line}")
