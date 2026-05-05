@@ -1,0 +1,7 @@
+name: media-galleries
+display_name: Media Galleries
+description: Custom chat page with realtime image and video galleries backed by session data.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+optional_secrets:

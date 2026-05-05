@@ -1,7 +1,7 @@
 [project]
 name = "{{ project_slug }}"
 version = "0.1.0"
-description = "A simple Capsule app that demonstrates terminal blocks."
+description = "A Capsule app demonstrating realtime image and video galleries."
 requires-python = ">=3.13"
 dependencies = [
     "cpsl>=0.3.98",

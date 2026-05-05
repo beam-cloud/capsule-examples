@@ -9,7 +9,7 @@ A minimal Capsule app that streams command output into chat as a terminal transc
 - `term.exec("python", "-c", "...")` runs a structured argv command.
 - Both command methods return a result with `exit_code`, `stdout`, `stderr`, and `ok` for follow-up decisions.
 - The transcript stays in chat history, so refreshing the page shows the completed command runs.
-- Use `session.terminal("diagnostics", title="Diagnostics")` instead when you intentionally want later messages or tasks to append to the same named transcript.
+- `session.terminal("diagnostics")` creates a durable handle without rendering UI yet. Use `await session.show_terminal(terminal=term, title="Diagnostics")` when you want to place that handle in chat; after it is shown, later `shell()` and `exec()` calls stream into the same block.
 
 ## Run
 
