@@ -86,15 +86,16 @@ SEED_DEALS = [
 ]
 
 
-@app.boot()
-async def seed_deals():
-    if await deals.count() > 0:
-        return
-    await deals.insert_many(SEED_DEALS)
+async def ensure_seed_deals():
+    existing_ids = {row.get("project_id") for row in await deals.raw_filter({}, limit=100)}
+    missing = [deal for deal in SEED_DEALS if deal["project_id"] not in existing_ids]
+    if missing:
+        await deals.insert_many(missing)
 
 
 @app.message("deal-desk", label="Deal Desk")
 async def deal_chat(session: cpsl.Session, msg: cpsl.Message):
+    await ensure_seed_deals()
     project_id = session.data.get("project_id")
     row = await deals.get(project_id=project_id) if project_id else None
     address = row.get("property_address") if row else "this deal"
