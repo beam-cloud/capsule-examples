@@ -1,10 +1,10 @@
 [project]
 name = "{{ project_slug }}"
 version = "0.1.0"
-description = "A Capsule app demonstrating realtime image and video galleries."
+description = "A custom React deal desk with named chat threads."
 requires-python = ">=3.13"
 dependencies = [
-    "cpsl>=0.3.99",
+    "cpsl>=0.3.107",
 ]
 
 [tool.setuptools]

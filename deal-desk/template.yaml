@@ -1,0 +1,7 @@
+name: deal-desk
+display_name: Deal Desk
+description: Custom React page with named chat threads, project layout, and field inspector.
+entrypoint: app.py:app
+uv: true
+required_secrets:
+optional_secrets:

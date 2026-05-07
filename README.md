@@ -23,6 +23,7 @@ capsule create research-loop --template background-agent
 capsule create research-notebook --template notebook-lm
 capsule create terminal-demo --template terminal-blocks
 capsule create media-gallery-demo --template media-galleries
+capsule create deal-desk-demo --template deal-desk
 ```
 
 ## Examples
@@ -35,5 +36,6 @@ capsule create media-gallery-demo --template media-galleries
 - `notebook-lm` — custom chat surface with a source filesystem browser, chat panel, and study-action studio.
 - `terminal-blocks` — simple chat app that streams shell and exec command transcripts into chat.
 - `media-galleries` — custom chat page with realtime image and video galleries backed by session data.
+- `deal-desk` — custom React page with named chat threads, a project list, and a field inspector.
 
 Each directory is a complete Capsule app with its own `README.md`, `template.yaml`, `pyproject.toml`, and root-level `app.py`.

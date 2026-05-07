@@ -1,3 +1,4 @@
+import base64
 import html
 import textwrap
 
@@ -25,6 +26,9 @@ def _ensure_media_lists(session: cpsl.Session) -> None:
 def _image_svg(prompt: str, index: int) -> bytes:
     safe = html.escape(prompt[:80] or "Generated image")
     hue = (index * 47) % 360
+    words = safe.split()
+    line_one = " ".join(words[:4]) or "Generated"
+    line_two = " ".join(words[4:9])
     return textwrap.dedent(
         f"""
         <svg xmlns="http://www.w3.org/2000/svg" width="1200" height="800" viewBox="0 0 1200 800">
@@ -38,14 +42,16 @@ def _image_svg(prompt: str, index: int) -> bytes:
           <circle cx="970" cy="160" r="110" fill="rgba(255,255,255,0.18)"/>
           <circle cx="210" cy="650" r="160" fill="rgba(0,0,0,0.16)"/>
           <text x="80" y="120" fill="white" font-family="Inter, system-ui, sans-serif" font-size="38" font-weight="700">Generated image #{index}</text>
-          <foreignObject x="80" y="210" width="980" height="360">
-            <div xmlns="http://www.w3.org/1999/xhtml" style="font-family: Inter, system-ui, sans-serif; font-size: 64px; font-weight: 800; line-height: 1.08; color: white;">
-              {safe}
-            </div>
-          </foreignObject>
+          <text x="80" y="370" fill="white" font-family="Inter, system-ui, sans-serif" font-size="72" font-weight="800">{line_one}</text>
+          <text x="80" y="460" fill="rgba(255,255,255,0.86)" font-family="Inter, system-ui, sans-serif" font-size="56" font-weight="700">{line_two}</text>
         </svg>
         """
     ).strip().encode()
+
+
+def _image_data_url(prompt: str, index: int) -> str:
+    encoded = base64.b64encode(_image_svg(prompt, index)).decode()
+    return f"data:image/svg+xml;base64,{encoded}"
 
 
 @app.data("generated_images")
@@ -61,36 +67,41 @@ def generated_videos(session: cpsl.Session):
 @app.chat_page(mode="single", scope="owner", sidebar_label="Studio")
 def chat_page():
     return ui.Page([
-        ui.Row(
+        ui.Column(
             [
-                ui.Column(
-                    [
-                        ui.Text("Generated images", style="heading"),
-                        ui.Text("Images append here as soon as each item is persisted.", style="muted"),
-                        ui.ImageGallery(data="generated_images", title="Image gallery"),
-                    ],
-                    fill=True,
-                    gap=12,
-                ),
                 ui.ChatPanel(
                     title="Generate",
                     placeholder="Describe an image or video idea...",
                 ),
-                ui.Column(
+                ui.Row(
                     [
-                        ui.Text("Generated videos", style="heading"),
-                        ui.Text("Videos use the same session data + realtime refresh path.", style="muted"),
-                        ui.VideoGallery(data="generated_videos", title="Video gallery"),
+                        ui.Column(
+                            [
+                                ui.Text("Generated images", style="heading"),
+                                ui.ImageGallery(data="generated_images", title="Image gallery"),
+                            ],
+                            fill=True,
+                            gap=10,
+                        ),
+                        ui.Column(
+                            [
+                                ui.Text("Generated videos", style="heading"),
+                                ui.VideoGallery(data="generated_videos", title="Video gallery"),
+                            ],
+                            fill=True,
+                            gap=10,
+                        ),
                     ],
+                    columns=[1, 1],
+                    min_widths=[240, 240],
                     fill=True,
-                    gap=12,
+                    gap=16,
+                    align="stretch",
                 ),
             ],
-            columns=[1, 1.15, 1],
-            min_widths=[240, 360, 240],
+            rows=["3fr", "1fr"],
             gap=16,
             fill=True,
-            align="stretch",
         )
     ])
 
@@ -102,20 +113,26 @@ async def handle(session: cpsl.Session, msg: cpsl.Message):
 
     image_number = len(session.data["generated_images"]) + 1
     image = await session.media.image(
-        _image_svg(prompt, image_number),
+        _image_data_url(prompt, image_number),
         filename=f"generated-image-{image_number}.svg",
         mime_type="image/svg+xml",
-        caption=prompt,
+        caption=prompt.title(),
         alt=prompt,
     )
+    image["description"] = "Generated SVG variation rendered inline."
+    image["tags"] = ["image", "session"]
+    if image_number == 1:
+        image["badge"] = "new"
     session.data["generated_images"].append(image)
 
     video_number = len(session.data["generated_videos"]) + 1
     video = await session.media.video(
         SAMPLE_VIDEO_URL,
-        caption=f"Sample video for: {prompt}",
+        caption=f"Sample for: {prompt}".title(),
         filename=f"generated-video-{video_number}.mp4",
     )
+    video["description"] = "Sample CC0 clip wired to the session video gallery."
+    video["tags"] = ["video", "sample"]
     session.data["generated_videos"].append(video)
 
     await session.reply(

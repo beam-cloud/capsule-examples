@@ -1,0 +1,19 @@
+{
+  "compilerOptions": {
+    "jsx": "react-jsx",
+    "module": "esnext",
+    "target": "esnext",
+    "moduleResolution": "bundler",
+    "esModuleInterop": true,
+    "strict": false,
+    "baseUrl": ".",
+    "paths": {
+      "@capsule/page": [".capsule/types/capsule-page"],
+      "react": [".capsule/types/react"],
+      "react/jsx-runtime": [".capsule/types/react"],
+      "react-dom/client": [".capsule/types/react"]
+    }
+  },
+  "include": ["**/*.tsx", "**/*.ts", ".capsule/types/*.d.ts"],
+  "exclude": ["node_modules"]
+}
