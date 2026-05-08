@@ -36,6 +36,11 @@ Each project uses its own stable chat thread:
 ```tsx
 const chat = useChat("deal-desk", {
   threadKey: `project:${deal.id}`,
-  initialData: { project_id: deal.id },
+  context: { project_id: deal.id },
 })
 ```
+
+Because `deal-desk` is a non-default named chat surface, Capsule stores it
+as a durable session but hides it from the generic Chats list by default.
+The page owns project selection and resolves the right chat by passing the
+stable `threadKey`.

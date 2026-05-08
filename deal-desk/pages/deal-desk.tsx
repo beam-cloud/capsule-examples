@@ -185,7 +185,7 @@ export default function DealDesk() {
   const dealId = "3120-linden"
   const chat = useChat("deal-desk", {
     threadKey: `project:${dealId}`,
-    initialData: { project_id: dealId },
+    context: { project_id: dealId },
   })
 
   // Fields panel uses MOCK data so the demo renders the full extracted-schema
@@ -274,7 +274,7 @@ export default function DealDesk() {
             }
           />
           <div style={{ flex: 1, minHeight: 0, overflowY: "auto", padding: "16px 20px", display: "flex", flexDirection: "column", gap: 12 }}>
-            {EXAMPLE_THREAD.map(m => <EmailCard key={m.id} msg={m} />)}
+            {EXAMPLE_THREAD.map(m => <div key={m.id}><EmailCard msg={m} /></div>)}
           </div>
         </Pane.Main>
 
