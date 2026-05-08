@@ -5,9 +5,10 @@ import {
   ChatPanel,
   ConversationList,
   FieldInspector,
-  Layout,
+  Header,
   Metric,
-  SectionHeader,
+  Pane,
+  Shell,
   useChat,
   useCollection,
 } from "@capsule/page"
@@ -28,11 +29,11 @@ function dealFields(row?: Record<string, unknown>) {
   if (!row) return []
   return [
     { key: "property_address", label: "Property Address", value: row.property_address },
-    { key: "monthly_gross", label: "Monthly Gross", value: row.monthly_gross },
-    { key: "washer_count", label: "Washer Count", value: row.washer_count },
-    { key: "dryer_count", label: "Dryer Count", value: row.dryer_count },
-    { key: "equipment_age", label: "Equipment Age", value: row.equipment_age },
-    { key: "lease_remaining", label: "Lease Remaining", value: row.lease_remaining },
+    { key: "monthly_gross", label: "Monthly Gross", value: row.monthly_gross, confidence: 0.92 },
+    { key: "washer_count", label: "Washer Count", value: row.washer_count, confidence: 0.88 },
+    { key: "dryer_count", label: "Dryer Count", value: row.dryer_count, confidence: 0.86 },
+    { key: "equipment_age", label: "Equipment Age", value: row.equipment_age, confidence: 0.91 },
+    { key: "lease_remaining", label: "Lease Remaining", value: row.lease_remaining, confidence: 0.95 },
     { key: "water_heater_type", label: "Water Heater", value: row.water_heater_type },
     { key: "broker_contact", label: "Broker Contact", value: row.broker_contact },
   ]
@@ -54,30 +55,30 @@ export default function DealDesk() {
   })
 
   return (
-    <Layout.Root>
-      <Layout.Sidebar width={160}>
-        <SectionHeader title="daemon" subtitle="deal desk" />
-        <Button style={{ margin: 10 }} variant="ghost">Home</Button>
-        <Button style={{ margin: 10 }} variant="ghost">Projects</Button>
-        <Button style={{ margin: 10 }} variant="ghost">Tables</Button>
-      </Layout.Sidebar>
+    <Shell>
+      <Pane.Sidebar width={164}>
+        <Header title="daemon" subtitle="deal desk" />
+        <Button style={{ margin: 10, justifyContent: "flex-start" }} variant="ghost">Home</Button>
+        <Button style={{ margin: 10, justifyContent: "flex-start" }} variant="ghost">Projects</Button>
+        <Button style={{ margin: 10, justifyContent: "flex-start" }} variant="ghost">Tables</Button>
+      </Pane.Sidebar>
 
-      <Layout.ListPane width={280}>
-        <SectionHeader title="Projects" subtitle="Owner-scoped threads" />
+      <Pane.List width={300}>
+        <Header title="Projects" subtitle="Owner-scoped threads" />
         <ConversationList items={DEALS} activeId={deal.id} onSelect={(item) => setDeal(item as Deal)} />
-      </Layout.ListPane>
+      </Pane.List>
 
-      <Layout.Detail>
-        <SectionHeader
+      <Pane.Main>
+        <Header
           title={deal.title}
           subtitle={deal.subtitle}
           action={<Badge tone={chat.connected ? "success" : "default"}>{chat.status}</Badge>}
         />
         <ChatPanel messages={chat.messages} status={chat.status} onSend={chat.send} />
-      </Layout.Detail>
+      </Pane.Main>
 
-      <Layout.ListPane width={340}>
-        <SectionHeader
+      <Pane.Inspector width={340}>
+        <Header
           title="Fields"
           subtitle={selected ? "Extracted fields" : "Loading deal fields"}
           action={<Button size="sm" onClick={collection.refresh}>Refresh</Button>}
@@ -88,7 +89,7 @@ export default function DealDesk() {
             <FieldInspector fields={dealFields(selected)} />
           </Card>
         </div>
-      </Layout.ListPane>
-    </Layout.Root>
+      </Pane.Inspector>
+    </Shell>
   )
 }
